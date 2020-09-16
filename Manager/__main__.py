@@ -22,9 +22,9 @@ from Manager.modules.helper_funcs.misc import paginate_modules
 PM_START_TEXT = """
 Hello {}, my name is {}!
 
-You know how hard it is sometimes to manage group so here is the solution for you.
+Hey , I am a Group Manager specially made for Mnaging groups.
 
-My owner is [Joker](t.me/joker_ka_baap)
+This Pro bot was made by  [ᒍOKEᖇ](t.me/joker_ka_baap)
 
 Click /help or Help button below to find out more about how to use me to my full potential.
 """
