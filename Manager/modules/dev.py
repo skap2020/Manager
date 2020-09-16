@@ -7,8 +7,8 @@ from typing import List
 from telegram import Bot, Update, TelegramError
 from telegram.ext import CommandHandler, run_async
 
-from tg_bot import dispatcher
-from tg_bot.modules.helper_funcs.chat_status import dev_plus
+from Manager import dispatcher
+from Manager.modules.helper_funcs.chat_status import dev_plus
 
 
 @run_async
@@ -60,5 +60,5 @@ dispatcher.add_handler(LEAVE_HANDLER)
 dispatcher.add_handler(GITPULL_HANDLER)
 dispatcher.add_handler(RESTART_HANDLER)
 
-__mod_name__ = "DEV"
+__mod_name__ = "Dev"
 __handlers__ = [LEAVE_HANDLER, GITPULL_HANDLER, RESTART_HANDLER]

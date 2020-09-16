@@ -3,8 +3,8 @@ from typing import List
 from telegram import Bot, Update
 from telegram.ext import run_async
 
-from tg_bot import dispatcher
-from tg_bot.modules.disable import DisableAbleCommandHandler
+from Manager import dispatcher
+from Manager.modules.disable import DisableAbleCommandHandler
 
 normiefont = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
               'v', 'w', 'x', 'y', 'z']
@@ -28,13 +28,13 @@ def weebify(bot: Bot, update: Update, args: List[str]):
 
 
 __help__ = """
- - /weebify <text>: returns a weebified text
+ • `/weebify <text>`*:* returns a weebified text
  """
 
 WEEBIFY_HANDLER = DisableAbleCommandHandler("weebify", weebify, pass_args=True)
 
 dispatcher.add_handler(WEEBIFY_HANDLER)
 
-__mod_name__ = "WEEBIFY"
+__mod_name__ = "Weebify"
 __command_list__ = ["weebify"]
 __handlers__ = [WEEBIFY_HANDLER]

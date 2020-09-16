@@ -3,7 +3,7 @@ import threading
 
 from sqlalchemy import Column, String, Boolean
 
-from tg_bot.modules.sql import SESSION, BASE
+from Manager.modules.sql import SESSION, BASE
 
 
 class Permissions(BASE):
@@ -66,7 +66,6 @@ class Restrictions(BASE):
 
 Permissions.__table__.create(checkfirst=True)
 Restrictions.__table__.create(checkfirst=True)
-
 
 PERM_LOCK = threading.RLock()
 RESTR_LOCK = threading.RLock()

@@ -6,10 +6,10 @@ from telegram import Bot, Update, ParseMode, InlineKeyboardMarkup, InlineKeyboar
 from telegram.error import BadRequest, Unauthorized
 from telegram.ext import CommandHandler, CallbackQueryHandler, run_async
 
-import tg_bot.modules.sql.connection_sql as sql
-from tg_bot import dispatcher, SUDO_USERS, DEV_USERS
-from tg_bot.modules.helper_funcs import chat_status
-from tg_bot.modules.helper_funcs.alternate import send_message
+import Manager.modules.sql.connection_sql as sql
+from Manager import dispatcher, SUDO_USERS, DEV_USERS
+from Manager.modules.helper_funcs import chat_status
+from Manager.modules.helper_funcs.alternate import send_message
 
 user_admin = chat_status.user_admin
 
@@ -275,13 +275,13 @@ def connect_button(bot: Bot, update: Update):
 
 
 __help__ = """
- - /connect: connect a chat (Can be done in a group by /connect or /connect <chat id> in PM)
- - /connection: list connected chats
- - /disconnect: disconnect from a chat
- - /helpconnect: list available commands that can be done remotely
+ • `/connect`*:* connect a chat (Can be done in a group by `/connect` or `/connect <chat id>` in PM)
+ • `/connection`*:* list connected chats
+ • `/disconnect`*:* disconnect from a chat
+ • `/helpconnect`*:* list available commands that can be done remotely
 
-*Admin only:*
- - /allowconnect <yes/no>: allow a user to connect to a chat
+*Admins only:*
+ • `/allowconnect <yes/no>`*:* allow a user to connect to a chat
 """
 
 CONNECT_CHAT_HANDLER = CommandHandler("connect", connect_chat, pass_args=True)
@@ -298,6 +298,6 @@ dispatcher.add_handler(ALLOW_CONNECTIONS_HANDLER)
 dispatcher.add_handler(HELP_CONNECT_CHAT_HANDLER)
 dispatcher.add_handler(CONNECT_BTN_HANDLER)
 
-__mod_name__ = "CONNECTION"
+__mod_name__ = "Connection"
 __handlers__ = [CONNECT_CHAT_HANDLER, CONNECTION_CHAT_HANDLER, DISCONNECT_CHAT_HANDLER, ALLOW_CONNECTIONS_HANDLER,
                 HELP_CONNECT_CHAT_HANDLER, CONNECT_BTN_HANDLER]

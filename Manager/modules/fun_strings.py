@@ -1,65 +1,35 @@
 RUN_STRINGS = (
-    "Where do you think you're going?",
     "Huh? what? did they get away?",
-    "ZZzzZZzz... Huh? what? oh, just them again, nevermind.",
+    "Now you see me, now you don't."
+    "ε=ε=ε=ε=┌(;￣▽￣)┘",
     "Get back here!",
-    "Not so fast...",
+    "REEEEEEEEEEEEEEEEEE!!!!!!!",
     "Look out for the wall!",
     "Don't leave me alone with them!!",
-    "You run, you die.",
-    "Jokes on you, I'm everywhere",
-    "You're gonna regret that...",
-    "You could also try /punchme, I hear that's fun.",
-    "Go bother someone else, no-one here cares.",
-    "You can run, but you can't hide.",
-    "Is that all you've got?",
-    "I'm behind you...",
     "You've got company!",
-    "We can do this the easy way, or the hard way.",
-    "You just don't get it, do you?",
-    "Yeah, you better run!",
-    "Please, remind me how much I care?",
-    "I'd run faster if I were you.",
-    "That's definitely the droid we're looking for.",
+    "Chotto matte!", # How about two Japanese?
+    "Yare yare daze",
+    "*Naruto run activated*",
+    "*Nezuko run activated*",
+    "Hey take responsibilty for what you just did!",
     "May the odds be ever in your favour.",
-    "Famous last words.",
+    "Run everyone, they just dropped a bomb 💣💣",
     "And they disappeared forever, never to be seen again.",
-    "\"Oh, look at me! I'm so cool, I can run from a bot!\" - this person",
-    "Yeah yeah, just tap /punchme already.",
-    "Here, take this ring and head to Mordor while you're at it.",
-    "Legend has it, they're still running...",
-    "Unlike Harry Potter, your parents can't protect you from me.",
-    "Fear leads to anger. Anger leads to hate. Hate leads to suffering. If you keep running in fear, you might "
-    "be the next Vader.",
-    "Multiple calculations later, I have decided my interest in your shenanigans is exactly 0.",
     "Legend has it, they're still running.",
-    "Keep it up, not sure we want you here anyway.",
-    "You're a wiza- Oh. Wait. You're not Harry, keep moving.",
-    "NO RUNNING IN THE HALLWAYS!",
     "Hasta la vista, baby.",
-    "Who let the dogs out?",
-    "It's funny, because no one cares.",
     "Ah, what a waste. I liked that one.",
-    "Frankly, my dear, I don't give a damn.",
-    "My milkshake brings all the boys to yard... So run faster!",
-    "You can't HANDLE the truth!",
-    "A long time ago, in a galaxy far far away... Someone would've cared about that. Not anymore though.",
-    "Hey, look at them! They're running from the inevitable banhammer... Cute.",
-    "Han shot first. So will I.",
-    "What are you running after, a white rabbit?",
     "As The Doctor would say... RUN!",
 )
 
 SLAP_SAITAMA_TEMPLATES = (
     "Slap me one more time and I'll mute you.",
-    "Stop slapping me. 😡.",
+    "Stop slapping me. REEEEEEEEEEEEEE.",
     [
         "I am muting you for a minute.",  # normal reply
-        "Stop slapping me just because I can't mute you. 🤧.",  # reply to admin
+        "Stop slapping me just because I can't mute you. REEEEEEEEEE.",  # reply to admin
         "tmute"  # command
     ]
 )
-
 
 SLAP_TEMPLATES = (
     "{user2} was shot by {user1}.",
@@ -67,12 +37,12 @@ SLAP_TEMPLATES = (
     "{user2} drowned whilst trying to escape {user1}.",
     "{user2} fell into a patch of cacti.",
     "{user2} went up in flames.",
-    "{user2} burned to death.",
+    "{user2} burned to a fine crisp.",
     "{user2} was burnt to a crisp whilst fighting {user1}.",
     "{user2} was struck by lightning.",
     "{user2} was slain by {user1}.",
     "{user2} was killed by magic.",
-    "{user2} starved to death.",
+    "{user2} starved without pats.",
     "{user2} fell out of the world.",
     "{user2} was knocked into the void by {user1}.",
     "{user2}'s bones are scraped clean by the desolate wind.",
@@ -84,7 +54,6 @@ SLAP_TEMPLATES = (
     "{user2} was sawn in half by {user1}.",
     "{user2}'s melon was split by {user1}.",
     "{user2} was sliced and diced by {user1}.",
-    "{user2}'s death put another notch in {user1}'s axe.",
     "{user2} died from {user1}'s mysterious tropical disease.",
     "{user2} played hot-potato with a grenade.",
     "{user2} was knifed by {user1}.",
@@ -114,7 +83,7 @@ SLAP_TEMPLATES = (
     "{user2} was made redundant.",
     "{user1} {hits} {user2} with a bat!.",
     "{user1} {hits} {user2} with a Taijutsu Kick!.",
-    "{user1} {hits} {user2} with X-Gloves!.",    
+    "{user1} {hits} {user2} with X-Gloves!.",
     "{user1} {hits} {user2} with a Jet Punch!.",
     "{user1} {hits} {user2} with a Jet Pistol!.",
     "{user1} {hits} {user2} with a United States of Smash!.",
@@ -134,7 +103,7 @@ SLAP_TEMPLATES = (
     "*points at {user2}* What's with this sassy... lost child?.",
     "*Hits {user2} with a Fire Tornado*.",
     "{user1} pokes {user2} in the eye !",
-    "{user1} pokes {user2} on the sides!",        
+    "{user1} pokes {user2} on the sides!",
     "{user1} pokes {user2}!",
     "{user1} pokes {user2} with a needle!",
     "{user1} pokes {user2} with a pen!",
@@ -144,7 +113,7 @@ SLAP_TEMPLATES = (
     "( ･_･)ﾉ⌒●~* (･.･;) <-{user2}",
     "Take this {user2}\n(ﾉﾟДﾟ)ﾉ ))))●~* ",
     "Here {user2} hold this\n(｀・ω・)つ ●~＊",
-    "( ・_・)ノΞ●~*  {user2},Shinaeeeee!!.",
+    "( ・_・)ノΞ●~*  {user2}\nDieeeee!!.",
     "( ・∀・)ｒ鹵~<≪巛;ﾟДﾟ)ﾉ\n*Bug sprays {user2}*.",
     "( ﾟДﾟ)ﾉ占~<巛巛巛.\n-{user2} You pest!",
     "( う-´)づ︻╦̵̵̿╤── \(˚☐˚”)/ {user2}.",
@@ -166,8 +135,30 @@ SLAP_TEMPLATES = (
     "{user1} ara ara's {user2}.",
     "{user1} ora ora's {user2}.",
     "{user1} muda muda's {user2}.",
-    "{user2} was turned into a Jojo reference!",  
+    "{user2} was turned into a Jojo reference!",
     "{user1} hits {user2} with {item}.",
+    "Round 2!..Ready? .. FIGHT!!",
+    "WhoPixel will oof {user2}, to infinity and beyond.",
+    "{user2} ate a bat and discovered a new disease.",
+    "{user1} folded {user2} into a paper plane",
+    "{user1} exchanged {user2}'s life-force for a cup of chocolate.",
+    "{user2} did a 69 with a cactus.",
+    "{user1} served {user2} some bat soup.",
+    "{user2} was sent to his home, the planet of apes.",
+    "{user1} kicked {user2} out of a moving train.",
+    "{user1} traveled to the future and spat on {user2}'s grave.",
+    "{user2} died from talk-no-jutsu.",
+    "{user2} was placed as a carpet for a stomp dance competition.",
+    "{user2} just killed John Wick’s dog.",
+    "{user1} performed an Avada Kedavra spell on {user2}.",
+    "{user1} subjected {user2} to a fiery furnace.",
+    "Sakura Haruno just got more useful than {user2}",
+    "{user1} unplugged {user2}'s life support.",
+    "{user1} subscribed {user2}' to 5 years of bad internet.",
+    "{user1} learned why being a crocodile dentist was a bad idea.",
+    "You know what’s worse than Dad jokes? {user2}!",
+    "{user1} took all of {user2}'s cookies.",
+    "{user2} wa mou.......Shindeiru! - {user1}.",
 )
 
 PING_STRING = (
@@ -202,37 +193,20 @@ ITEMS = (
 )
 
 THROW = (
-    "എറിഞ്ഞു",
-    "വിക്ഷേപിച്ചു",
-    "തട്ടി",
-    "വീശിയെറിഞ്ഞു",
+    "throws",
+    "flings",
+    "chucks",
+    "hurls",
 )
 
 HIT = (
-    "അടിച്ചു",
-    "ശക്തിയായി പ്രഹരിച്ചു",
-    "തല്ലി",
-    "ഇടിച്ചു",
-    "തൊഴിച്ചു",
+    "hits",
+    "whacks",
+    "slaps",
+    "smacks",
+    "bashes",
+    "pats",
 
-)
-
-ABUSE_STRINGS = (
-    "Fuck off",
-    "Stfu go fuck yourself",
-    "Ur mum gey",
-    "Ur dad lesbo",
-    "Bsdk",
-    "Nigga",
-    "Ur granny tranny",
-    "you noob",
-    "Relax your Rear,ders nothing to fear,The Rape train is finally here",
-    "Stfu bc",
-    "Stfu and Gtfo U nub",
-    "GTFO bsdk",
-    "CUnt",
-    " Gay is here",
-    "Ur dad gey bc ",
 )
 
 EYES = [
@@ -414,7 +388,7 @@ TOSS = (
 
 DECIDE = (
     "Yes.",
-    "NoU.",
+    "No.",
     "Maybe."
 )
 

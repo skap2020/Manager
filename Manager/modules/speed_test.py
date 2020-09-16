@@ -2,9 +2,9 @@ import speedtest
 from telegram import Update, Bot, ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext import run_async, CallbackQueryHandler
 
-from tg_bot import dispatcher, DEV_USERS
-from tg_bot.modules.disable import DisableAbleCommandHandler
-from tg_bot.modules.helper_funcs.chat_status import dev_plus
+from Manager import dispatcher, DEV_USERS
+from Manager.modules.disable import DisableAbleCommandHandler
+from Manager.modules.helper_funcs.chat_status import dev_plus
 
 def convert(speed):
     return round(int(speed)/1048576, 2)
@@ -25,7 +25,7 @@ def speedtestxyz_callback(bot: Bot, update: Update):
     query = update.callback_query
 
     if query.from_user.id in DEV_USERS:
-        msg = update.effective_message.edit_text('Runing a speedtest....') 
+        msg = update.effective_message.edit_text('Running a speedtest....') 
         speed = speedtest.Speedtest()
         speed.get_best_server()
         speed.download()
@@ -51,6 +51,6 @@ SPEED_TEST_CALLBACKHANDLER = CallbackQueryHandler(speedtestxyz_callback, pattern
 dispatcher.add_handler(SPEED_TEST_HANDLER)
 dispatcher.add_handler(SPEED_TEST_CALLBACKHANDLER)
 
-__mod_name__ = "SPEED TEST"
+__mod_name__ = "SpeedTest"
 __command_list__ = ["speedtest"]
 __handlers__ = [SPEED_TEST_HANDLER, SPEED_TEST_CALLBACKHANDLER]

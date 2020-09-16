@@ -1,26 +1,30 @@
 from datetime import datetime
 from functools import wraps
 
-from tg_bot.modules.helper_funcs.misc import is_module_loaded
+from Manager.modules.helper_funcs.misc import is_module_loaded
 
 FILENAME = __name__.rsplit(".", 1)[-1]
 
 if is_module_loaded(FILENAME):
     from telegram import Bot, Update, ParseMode
     from telegram.error import BadRequest, Unauthorized
-    from telegram.ext import CommandHandler, run_async
+    from telegram.ext import CommandHandler, run_async, JobQueue
     from telegram.utils.helpers import escape_markdown
 
-    from tg_bot import dispatcher, LOGGER, GBAN_LOGS
-    from tg_bot.modules.helper_funcs.chat_status import user_admin
-    from tg_bot.modules.sql import log_channel_sql as sql
+    from Manager import dispatcher, LOGGER, GBAN_LOGS
+    from Manager.modules.helper_funcs.chat_status import user_admin
+    from Manager.modules.sql import log_channel_sql as sql
 
 
     def loggable(func):
         @wraps(func)
-        def log_action(bot: Bot, update: Update, *args, **kwargs):
+        def log_action(bot: Bot, update: Update, job_queue: JobQueue = None, *args, **kwargs):
 
-            result = func(bot, update, *args, **kwargs)
+            if not job_queue:
+                result = func(bot, update, *args, **kwargs)
+            else:
+                result = func(bot, update, job_queue, *args, **kwargs)
+
             chat = update.effective_chat
             message = update.effective_message
 
@@ -33,7 +37,7 @@ if is_module_loaded(FILENAME):
                 log_chat = sql.get_chat_log_channel(chat.id)
                 if log_chat:
                     send_log(bot, log_chat, chat.id, result)
-            elif result == "":
+            elif result == "" or not result:
                 pass
             else:
                 LOGGER.warning("%s was set as loggable, but had no return statement.", func)
@@ -60,7 +64,7 @@ if is_module_loaded(FILENAME):
                 log_chat = str(GBAN_LOGS)
                 if log_chat:
                     send_log(bot, log_chat, chat.id, result)
-            elif result == "":
+            elif result == "" or not result:
                 pass
             else:
                 LOGGER.warning("%s was set as loggable to gbanlogs, but had no return statement.", func)
@@ -174,17 +178,18 @@ if is_module_loaded(FILENAME):
 
 
     __help__ = """
-*Admin only:*
-- /logchannel: get log channel info
-- /setlog: set the log channel.
-- /unsetlog: unset the log channel.
+*Admins only:*
+• `/logchannel`*:* get log channel info
+• `/setlog`*:* set the log channel.
+• `/unsetlog`*:* unset the log channel.
+
 Setting the log channel is done by:
-- adding the bot to the desired channel (as an admin!)
-- sending /setlog in the channel
-- forwarding the /setlog to the group
+• adding the bot to the desired channel (as an admin!)
+• sending `/setlog` in the channel
+• forwarding the `/setlog` to the group
 """
 
-    __mod_name__ = "LOG CHANNEL"
+    __mod_name__ = "Log Channels"
 
     LOG_HANDLER = CommandHandler("logchannel", logging)
     SET_LOG_HANDLER = CommandHandler("setlog", setlog)

@@ -6,12 +6,12 @@ from telegram.error import BadRequest
 from telegram.ext import run_async, CommandHandler, Filters
 from telegram.utils.helpers import mention_html
 
-from tg_bot import dispatcher
-from tg_bot.modules.helper_funcs.chat_status import bot_admin, user_admin, is_user_ban_protected, can_restrict, \
+from Manager import dispatcher
+from Manager.modules.helper_funcs.chat_status import bot_admin, user_admin, is_user_ban_protected, can_restrict, \
     is_user_admin, is_user_in_chat, is_bot_admin
-from tg_bot.modules.helper_funcs.extraction import extract_user_and_text
-from tg_bot.modules.helper_funcs.string_handling import extract_time
-from tg_bot.modules.helper_funcs.filters import CustomFilters
+from Manager.modules.helper_funcs.extraction import extract_user_and_text
+from Manager.modules.helper_funcs.string_handling import extract_time
+from Manager.modules.helper_funcs.filters import CustomFilters
 
 RBAN_ERRORS = {
     "User is an administrator of the chat",
@@ -95,7 +95,7 @@ def rban(bot: Bot, update: Update, args: List[str]):
     user_id, chat_id = extract_user_and_text(message, args)
 
     if not user_id:
-        message.reply_text("You don't seem to be referring to a user.")
+        message.reply_text("You don't seem to be referring to a user or the ID specified is incorrect..")
         return
     elif not chat_id:
         message.reply_text("You don't seem to be referring to a chat.")
@@ -162,7 +162,7 @@ def runban(bot: Bot, update: Update, args: List[str]):
     user_id, chat_id = extract_user_and_text(message, args)
 
     if not user_id:
-        message.reply_text("You don't seem to be referring to a user.")
+        message.reply_text("You don't seem to be referring to a user or the ID specified is incorrect..")
         return
     elif not chat_id:
         message.reply_text("You don't seem to be referring to a chat.")
@@ -229,7 +229,7 @@ def rkick(bot: Bot, update: Update, args: List[str]):
     user_id, chat_id = extract_user_and_text(message, args)
 
     if not user_id:
-        message.reply_text("You don't seem to be referring to a user.")
+        message.reply_text("You don't seem to be referring to a user or the ID specified is incorrect..")
         return
     elif not chat_id:
         message.reply_text("You don't seem to be referring to a chat.")
@@ -296,7 +296,7 @@ def rmute(bot: Bot, update: Update, args: List[str]):
     user_id, chat_id = extract_user_and_text(message, args)
 
     if not user_id:
-        message.reply_text("You don't seem to be referring to a user.")
+        message.reply_text("You don't seem to be referring to a user or the ID specified is incorrect..")
         return
     elif not chat_id:
         message.reply_text("You don't seem to be referring to a chat.")
@@ -363,7 +363,7 @@ def runmute(bot: Bot, update: Update, args: List[str]):
     user_id, chat_id = extract_user_and_text(message, args)
 
     if not user_id:
-        message.reply_text("You don't seem to be referring to a user.")
+        message.reply_text("You don't seem to be referring to a user or the ID specified is incorrect..")
         return
     elif not chat_id:
         message.reply_text("You don't seem to be referring to a chat.")
@@ -426,7 +426,7 @@ def runmute(bot: Bot, update: Update, args: List[str]):
 
 __help__ = ""
 
-__mod_name__ = "REMOTE COMMANDS"
+__mod_name__ = "Remote Commands"
 
 RBAN_HANDLER = CommandHandler("rban", rban, pass_args=True, filters=CustomFilters.sudo_filter)
 RUNBAN_HANDLER = CommandHandler("runban", runban, pass_args=True, filters=CustomFilters.sudo_filter)

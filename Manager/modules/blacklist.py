@@ -5,19 +5,25 @@ from typing import List
 from telegram import Bot, Update, ParseMode
 from telegram.error import BadRequest
 from telegram.ext import CommandHandler, MessageHandler, Filters, run_async
-
-import tg_bot.modules.sql.blacklist_sql as sql
-from tg_bot import dispatcher, LOGGER
-from tg_bot.modules.disable import DisableAbleCommandHandler
-from tg_bot.modules.helper_funcs.chat_status import user_admin, user_not_admin, connection_status
-from tg_bot.modules.helper_funcs.extraction import extract_text
-from tg_bot.modules.helper_funcs.misc import split_message
+from Manager.modules.helper_funcs.regex_helper import infinite_loop_check, regex_searcher
+import Manager.modules.sql.blacklist_sql as sql
+from Manager import dispatcher, LOGGER
+from Manager.modules.disable import DisableAbleCommandHandler
+from Manager.modules.helper_funcs.chat_status import user_admin, user_not_admin, connection_status
+from Manager.modules.helper_funcs.extraction import extract_text
+from Manager.modules.helper_funcs.misc import split_message
 
 BLACKLIST_GROUP = 11
 
+def infinite_loop_check(regex):
+     loop_matches = [r'\((.{1,}[\+\*]){1,}\)[\+\*].', r'[\(\[].{1,}\{\d(,)?\}[\)\]]\{\d(,)?\}', r'\(.{1,}\)\{.{1,}(,)?\}\(.*\)(\+|\* |\{.*\})']
+     for match in loop_matches:
+          match_1 = re.search(match, regex)
+          if match_1: return True
 
 @run_async
 @connection_status
+@user_admin
 def blacklist(bot: Bot, update: Update, args: List[str]):
     msg = update.effective_message
     chat = update.effective_chat
@@ -66,7 +72,17 @@ def add_blacklist(bot: Bot, update: Update):
         to_blacklist = list(set(trigger.strip() for trigger in text.split("\n") if trigger.strip()))
 
         for trigger in to_blacklist:
-            sql.add_to_blacklist(chat.id, trigger.lower())
+            try:
+                re.compile(trigger)
+            except Exception as exce:
+                msg.reply_text(f"Couldn't add regex, Error: {exce}")
+                return
+            check = infinite_loop_check(trigger)
+            if not check:
+               sql.add_to_blacklist(chat.id, trigger.lower())
+            else:
+                msg.reply_text("I'm afraid I can't add that regex.")
+                return
 
         if len(to_blacklist) == 1:
             msg.reply_text(f"Added <code>{html.escape(to_blacklist[0])}</code> to the blacklist!",
@@ -126,14 +142,18 @@ def del_blacklist(bot: Bot, update: Update):
     chat = update.effective_chat
     message = update.effective_message
     to_match = extract_text(message)
-
+    msg = update.effective_message
     if not to_match:
         return
 
     chat_filters = sql.get_chat_blacklist(chat.id)
     for trigger in chat_filters:
-        pattern = r"( |^|[^\w])" + re.escape(trigger) + r"( |$|[^\w])"
-        if re.search(pattern, to_match, flags=re.IGNORECASE):
+        pattern = r"( |^|[^\w])" + trigger + r"( |$|[^\w])"
+        match = regex_searcher(pattern, to_match)
+        if not match:
+            #Skip to next item in blacklist
+            continue
+        if match:
             try:
                 message.delete()
             except BadRequest as excp:
@@ -164,17 +184,17 @@ the message will immediately be deleted. A good combo is sometimes to pair this 
 
 *NOTE:* blacklists do not affect group admins.
 
- - /blacklist: View the current blacklisted words.
+ • `/blacklist`*:* View the current blacklisted words.
 
-*Admin only:*
- - /addblacklist <triggers>: Add a trigger to the blacklist. Each line is considered one trigger, so using different \
+*Admins only:*
+ • `/addblacklist <triggers>`*:* Add a trigger to the blacklist. Each line is considered one trigger, so using different \
 lines will allow you to add multiple triggers.
- - /unblacklist <triggers>: Remove triggers from the blacklist. Same newline logic applies here, so you can remove \
+ • `/unblacklist <triggers>`*:* Remove triggers from the blacklist. Same newline logic applies here, so you can remove \
 multiple triggers at once.
- - /rmblacklist <triggers>: Same as above.
+ • `/rmblacklist <triggers>`*:* Same as above.
 """
 
-BLACKLIST_HANDLER = DisableAbleCommandHandler("blacklist", blacklist, pass_args=True, admin_ok=True)
+BLACKLIST_HANDLER = DisableAbleCommandHandler("blacklist", blacklist, pass_args=True)
 ADD_BLACKLIST_HANDLER = CommandHandler("addblacklist", add_blacklist)
 UNBLACKLIST_HANDLER = CommandHandler(["unblacklist", "rmblacklist"], unblacklist)
 BLACKLIST_DEL_HANDLER = MessageHandler((Filters.text | Filters.command | Filters.sticker | Filters.photo) & Filters.group, del_blacklist, edited_updates=True)
@@ -183,5 +203,5 @@ dispatcher.add_handler(ADD_BLACKLIST_HANDLER)
 dispatcher.add_handler(UNBLACKLIST_HANDLER)
 dispatcher.add_handler(BLACKLIST_DEL_HANDLER, group=BLACKLIST_GROUP)
 
-__mod_name__ = "WORD BLACKLIST"
+__mod_name__ = "Blacklist Word"
 __handlers__ = [BLACKLIST_HANDLER, ADD_BLACKLIST_HANDLER, UNBLACKLIST_HANDLER, (BLACKLIST_DEL_HANDLER, BLACKLIST_GROUP)]

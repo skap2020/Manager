@@ -1,4 +1,3 @@
-
 import json
 from pprint import pprint
 
@@ -6,7 +5,7 @@ import requests
 from telegram import Update, Bot
 from telegram.ext import CommandHandler
 
-from tg_bot import dispatcher
+from Manager import dispatcher
 
 # Open API key
 API_KEY = "6ae0c3a0-afdc-4532-a810-82ded0054236"
@@ -27,7 +26,7 @@ def translate(bot: Bot, update: Update):
         res = requests.get(URL, params=params)
         # print(res)
         # print(res.text)
-        pprint(json.loads(res.text))
+        #pprint(json.loads(res.text))
         changes = json.loads(res.text).get('LightGingerTheTextResult')
         curr_string = ""
 
@@ -44,15 +43,15 @@ def translate(bot: Bot, update: Update):
                 prev_end = end
 
         curr_string += msg.text[prev_end:]
-        print(curr_string)
+        # print(curr_string)
         update.effective_message.reply_text(curr_string)
 
 
 __help__ = """
- - /t: while replying to a message, will reply with a grammar corrected version
+ • Replying `/t` to a message will produce the grammar corrected version of it.
 """
 
-__mod_name__ = "GRAMMAR"
+__mod_name__ = "Grammar Correction"
 
 
 TRANSLATE_HANDLER = CommandHandler('t', translate)

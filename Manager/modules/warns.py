@@ -9,16 +9,16 @@ from telegram.error import BadRequest
 from telegram.ext import CommandHandler, run_async, DispatcherHandlerStop, MessageHandler, Filters, CallbackQueryHandler
 from telegram.utils.helpers import mention_html
 
-from tg_bot import dispatcher, BAN_STICKER, WHITELIST_USERS, TIGER_USERS
-from tg_bot.modules.disable import DisableAbleCommandHandler
-from tg_bot.modules.helper_funcs.chat_status import (is_user_admin, bot_admin, user_admin_no_reply, user_admin,
+from Manager import dispatcher, BAN_STICKER, WHITELIST_USERS, TIGER_USERS
+from Manager.modules.disable import DisableAbleCommandHandler
+from Manager.modules.helper_funcs.chat_status import (is_user_admin, bot_admin, user_admin_no_reply, user_admin,
                                                      can_restrict)
-from tg_bot.modules.helper_funcs.extraction import extract_text, extract_user_and_text, extract_user
-from tg_bot.modules.helper_funcs.filters import CustomFilters
-from tg_bot.modules.helper_funcs.misc import split_message
-from tg_bot.modules.helper_funcs.string_handling import split_quotes
-from tg_bot.modules.log_channel import loggable
-from tg_bot.modules.sql import warns_sql as sql
+from Manager.modules.helper_funcs.extraction import extract_text, extract_user_and_text, extract_user
+from Manager.modules.helper_funcs.filters import CustomFilters
+from Manager.modules.helper_funcs.misc import split_message
+from Manager.modules.helper_funcs.string_handling import split_quotes
+from Manager.modules.log_channel import loggable
+from Manager.modules.sql import warns_sql as sql
 
 WARN_HANDLER_GROUP = 9
 CURRENT_WARNING_FILTER_STRING = "<b>Current warning filters in this chat:</b>\n"
@@ -41,7 +41,7 @@ def warn(user: User, chat: Chat, reason: str, message: Message, warner: User = N
         if warner:
             message.reply_text("Wolf disasters are warn immune.")
         else:
-            message.reply_text("Wolf Disaster triggered an auto warn filter!\n I can't warn wolves but they should avoid abusing this.")
+            message.reply_text("Wolf Disaster triggered an auto warn filter!\nI can't warn wolves but they should avoid abusing this.")
         return
 
     if warner:
@@ -388,20 +388,20 @@ def __chat_settings__(chat_id, user_id):
 
 
 __help__ = """
- - /warns <userhandle>: get a user's number, and reason, of warns.
- - /warnlist: list of all current warning filters
+ • `/warns <userhandle>`*:* get a user's number, and reason, of warns.
+ • `/warnlist`*:* list of all current warning filters
 
 *Admins only:*
- - /warn <userhandle>: warn a user. After 3 warns, the user will be banned from the group. Can also be used as a reply.
- - /resetwarn <userhandle>: reset the warns for a user. Can also be used as a reply.
- - /addwarn <keyword> <reply message>: set a warning filter on a certain keyword. If you want your keyword to \
+ • `/warn <userhandle>`*:* warn a user. After 3 warns, the user will be banned from the group. Can also be used as a reply.
+ • `/resetwarn <userhandle>`*:* reset the warns for a user. Can also be used as a reply.
+ • `/addwarn <keyword> <reply message>`*:* set a warning filter on a certain keyword. If you want your keyword to \
 be a sentence, encompass it with quotes, as such: `/addwarn "very angry" This is an angry user`. 
- - /nowarn <keyword>: stop a warning filter
- - /warnlimit <num>: set the warning limit
- - /strongwarn <on/yes/off/no>: If set to on, exceeding the warn limit will result in a ban. Else, will just punch.
+ • `/nowarn <keyword>`*:* stop a warning filter
+ • `/warnlimit <num>`*:* set the warning limit
+ • `/strongwarn <on/yes/off/no>`*:* If set to on, exceeding the warn limit will result in a ban. Else, will just punch.
 """
 
-__mod_name__ = "WARNINGS"
+__mod_name__ = "Warnings"
 
 WARN_HANDLER = CommandHandler("warn", warn_user, pass_args=True, filters=Filters.group)
 RESET_WARN_HANDLER = CommandHandler(["resetwarn", "resetwarns"], reset_warns, pass_args=True, filters=Filters.group)

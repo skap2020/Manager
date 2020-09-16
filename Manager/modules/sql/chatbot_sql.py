@@ -2,7 +2,7 @@ import threading
 
 from sqlalchemy import Column, String
 
-from tg_bot.modules.sql import BASE, SESSION
+from Manager.modules.sql import BASE, SESSION
 
 
 class ChatbotChats(BASE):
@@ -65,3 +65,10 @@ def rem_chat(chat_id):
             SESSION.delete(autochat)
             
         SESSION.commit()
+
+
+def get_all_chats():
+    try:
+        return SESSION.query(ChatbotChats.chat_id).all()
+    finally:
+        SESSION.close()

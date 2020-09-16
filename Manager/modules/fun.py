@@ -6,12 +6,11 @@ from typing import List
 from telegram import Bot, Update, ParseMode
 from telegram.ext import run_async
 
-import tg_bot.modules.fun_strings as fun_strings
-from tg_bot import dispatcher
-from tg_bot.modules.disable import DisableAbleCommandHandler
-from tg_bot.modules.helper_funcs.chat_status import is_user_admin
-from tg_bot.modules.helper_funcs.extraction import extract_user
-
+import Manager.modules.fun_strings as fun_strings
+from Manager import dispatcher
+from Manager.modules.disable import DisableAbleCommandHandler
+from Manager.modules.helper_funcs.chat_status import is_user_admin, user_admin
+from Manager.modules.helper_funcs.extraction import extract_user
 
 @run_async
 def runs(bot: Bot, update: Update):
@@ -75,13 +74,6 @@ def toss(bot: Bot, update: Update):
 
 
 @run_async
-def abuse(bot: Bot, update: Update):
-    msg = update.effective_message
-    reply_text = msg.reply_to_message.reply_text if msg.reply_to_message else msg.reply_text
-    reply_text(random.choice(fun_strings.ABUSE_STRINGS))
-
-
-@run_async
 def shrug(bot: Bot, update: Update):
     msg = update.effective_message
     reply_text = msg.reply_to_message.reply_text if msg.reply_to_message else msg.reply_text
@@ -120,15 +112,15 @@ def table(bot: Bot, update: Update):
 
 
 __help__ = """
- - /runs: reply a random string from an array of replies.
- - /slap: slap a user, or get slapped if not a reply.
- - /shrug : get shrug XD.
- - /table : get flip/unflip :v.
- - /decide : Randomly answers yes/no/maybe
- - /toss : Tosses A coin
- - /bluetext : check urself :V
- - /roll : Roll a dice.
- - /rlg : Join ears,nose,mouth and create an emo ;-;
+ • `/runs`*:* reply a random string from an array of replies.
+ • `/slap`*:* slap a user, or get slapped if not a reply.
+ • `/shrug`*:* get shrug XD.
+ • `/table`*:* get flip/unflip :v.
+ • `/decide`*:* Randomly answers yes/no/maybe
+ • `/toss`*:* Tosses A coin
+ • `/bluetext`*:* check urself :V
+ • `/roll`*:* Roll a dice.
+ • `/rlg`*:* Join ears,nose,mouth and create an emo ;-;
 """
 
 RUNS_HANDLER = DisableAbleCommandHandler("runs", runs)
@@ -151,7 +143,8 @@ dispatcher.add_handler(RLG_HANDLER)
 dispatcher.add_handler(DECIDE_HANDLER)
 dispatcher.add_handler(TABLE_HANDLER)
 
-__mod_name__ = "FUN"
+
+__mod_name__ = "Fun"
 __command_list__ = ["runs", "slap", "roll", "toss", "shrug", "bluetext", "rlg", "decide", "table"]
 __handlers__ = [RUNS_HANDLER, SLAP_HANDLER, ROLL_HANDLER, TOSS_HANDLER, SHRUG_HANDLER, BLUETEXT_HANDLER, RLG_HANDLER,
                 DECIDE_HANDLER, TABLE_HANDLER]

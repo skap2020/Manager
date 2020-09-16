@@ -6,9 +6,9 @@ from telegram import Bot, Update, ParseMode
 from telegram.ext import CommandHandler, RegexHandler, MessageHandler
 from telegram.utils.helpers import escape_markdown
 
-from tg_bot import dispatcher
-from tg_bot.modules.helper_funcs.handlers import CMD_STARTERS, CustomCommandHandler
-from tg_bot.modules.helper_funcs.misc import is_module_loaded
+from Manager import dispatcher
+from Manager.modules.helper_funcs.handlers import CMD_STARTERS, CustomCommandHandler
+from Manager.modules.helper_funcs.misc import is_module_loaded
 
 FILENAME = __name__.rsplit(".", 1)[-1]
 
@@ -17,8 +17,8 @@ if is_module_loaded(FILENAME):
 
     from telegram.ext.dispatcher import run_async
 
-    from tg_bot.modules.helper_funcs.chat_status import user_admin, is_user_admin, connection_status
-    from tg_bot.modules.sql import disable_sql as sql
+    from Manager.modules.helper_funcs.chat_status import user_admin, is_user_admin, connection_status
+    from Manager.modules.sql import disable_sql as sql
 
     DISABLE_CMDS = []
     DISABLE_OTHER = []
@@ -118,7 +118,7 @@ if is_module_loaded(FILENAME):
     def disable_module(bot: Bot, update: Update, args: List[str]):
         chat = update.effective_chat
         if len(args) >= 1:
-            disable_module = "tg_bot.modules." + args[0].rsplit(".", 1)[0]
+            disable_module = "Manager.modules." + args[0].rsplit(".", 1)[0]
 
             try:
                 module = importlib.import_module(disable_module)
@@ -187,7 +187,7 @@ if is_module_loaded(FILENAME):
         chat = update.effective_chat
 
         if len(args) >= 1:
-            enable_module = "tg_bot.modules." + args[0].rsplit(".", 1)[0]
+            enable_module = "Manager.modules." + args[0].rsplit(".", 1)[0]
 
             try:
                 module = importlib.import_module(enable_module)
@@ -287,17 +287,17 @@ if is_module_loaded(FILENAME):
     dispatcher.add_handler(TOGGLE_HANDLER)
 
     __help__ = """
-    - /cmds: check the current status of disabled commands
+    • `/cmds`*:* check the current status of disabled commands
 
-    *Admin only:*
-    - /enable <cmd name>: enable that command
-    - /disable <cmd name>: disable that command
-    - /enablemodule <module name>: enable all commands in that module
-    - /disablemodule <module name>: disable all commands in that module
-    - /listcmds: list all possible toggleable commands
+    *Admins only:*
+    • `/enable <cmd name>`*:* enable that command
+    • `/disable <cmd name>`*:* disable that command
+    • `/enablemodule <module name>`*:* enable all commands in that module
+    • `/disablemodule <module name>`*:* disable all commands in that module
+    • `/listcmds`*:* list all possible toggleable commands
     """
 
-    __mod_name__ = "COMMAND DISABLING"
+    __mod_name__ = "Command disabling"
 
 else:
     DisableAbleCommandHandler = CommandHandler

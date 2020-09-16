@@ -2,8 +2,8 @@ import requests
 from telegram import Update, Bot, ParseMode
 from telegram.ext import run_async
 
-from tg_bot import dispatcher
-from tg_bot.modules.disable import DisableAbleCommandHandler
+from Manager import dispatcher
+from Manager.modules.disable import DisableAbleCommandHandler
 
 
 @run_async
@@ -19,14 +19,14 @@ def ud(bot: Bot, update: Update):
 
 
 __help__ = """
- - /ud <word>: Type the word or expression you want to search use.
- - /urban <word>: Same as /ud
+ • `/ud <word>`*:* Type the word or expression you want to search use.
+ • `/urban <word>`*:* Same as `/ud`
 """
 
 UD_HANDLER = DisableAbleCommandHandler(["ud", "urban"], ud)
 
 dispatcher.add_handler(UD_HANDLER)
 
-__mod_name__ = "URBAN DICTIONARY"
+__mod_name__ = "Urban dictionary"
 __command_list__ = ["ud", "urban"]
 __handlers__ = [UD_HANDLER]

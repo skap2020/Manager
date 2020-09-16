@@ -5,10 +5,10 @@ from typing import List
 from telegram import Bot, Update, ParseMode
 from telegram.ext import CommandHandler, MessageHandler, Filters, run_async
 
-from tg_bot import ALLOW_EXCL, dispatcher, CustomCommandHandler
-from tg_bot.modules.disable import DisableAbleCommandHandler
-from tg_bot.modules.helper_funcs.chat_status import user_admin, bot_can_delete, dev_plus, connection_status
-from tg_bot.modules.sql import cleaner_sql as sql
+from Manager import ALLOW_EXCL, dispatcher, CustomCommandHandler
+from Manager.modules.disable import DisableAbleCommandHandler
+from Manager.modules.helper_funcs.chat_status import user_admin, bot_can_delete, dev_plus, connection_status
+from Manager.modules.sql import cleaner_sql as sql
 
 if ALLOW_EXCL:
     CMD_STARTERS = ('/', '!')
@@ -197,14 +197,15 @@ def bluetext_ignore_list(bot: Bot, update: Update):
 
 
 __help__ = """
- - /cleanblue <on/off/yes/no> - clean commands after sending
- - /ignoreblue <word> - prevent auto cleaning of the command
- - /unignoreblue <word> - remove prevent auto cleaning of the command
- - /listblue - list currently whitelisted commands
+Blue text cleaner removed any made up commands that people send in your chat.
+ • `/cleanblue <on/off/yes/no>`*:* clean commands after sending
+ • `/ignoreblue <word>`*:* prevent auto cleaning of the command
+ • `/unignoreblue <word>`*:* remove prevent auto cleaning of the command
+ • `/listblue`*:* list currently whitelisted commands
  
- Following are Disasters only commands, admins cannot use these:
-  - /gignoreblue <word> - globally ignore bluetext cleaning.
- - /ungignoreblue <word> - remove said command from global cleaning list
+ *Following are Disasters only commands, admins cannot use these:*
+ • `/gignoreblue <word>`*:* globally ignorea bluetext cleaning of saved word across Saitama.
+ • `/ungignoreblue <word>`*:* remove said command from global cleaning list
 """
 
 SET_CLEAN_BLUE_TEXT_HANDLER = CommandHandler("cleanblue", set_blue_text_must_click, pass_args=True)
@@ -223,7 +224,7 @@ dispatcher.add_handler(REMOVE_CLEAN_BLUE_TEXT_GLOBAL_HANDLER)
 dispatcher.add_handler(LIST_CLEAN_BLUE_TEXT_HANDLER)
 dispatcher.add_handler(CLEAN_BLUE_TEXT_HANDLER, BLUE_TEXT_CLEAN_GROUP)
 
-__mod_name__ = "BlUETEXT CLEANING"
+__mod_name__ = "Bluetext Cleaning"
 __handlers__ = [SET_CLEAN_BLUE_TEXT_HANDLER, ADD_CLEAN_BLUE_TEXT_HANDLER, REMOVE_CLEAN_BLUE_TEXT_HANDLER,
                 ADD_CLEAN_BLUE_TEXT_GLOBAL_HANDLER, REMOVE_CLEAN_BLUE_TEXT_GLOBAL_HANDLER,
                 LIST_CLEAN_BLUE_TEXT_HANDLER, (CLEAN_BLUE_TEXT_HANDLER, BLUE_TEXT_CLEAN_GROUP)]

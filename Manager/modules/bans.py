@@ -6,13 +6,13 @@ from telegram.error import BadRequest
 from telegram.ext import CommandHandler, Filters, run_async
 from telegram.utils.helpers import mention_html
 
-from tg_bot import dispatcher, LOGGER, DEV_USERS, SUDO_USERS, TIGER_USERS
-from tg_bot.modules.disable import DisableAbleCommandHandler
-from tg_bot.modules.helper_funcs.chat_status import (bot_admin, user_admin, is_user_ban_protected, can_restrict,
-                                                     is_user_admin, is_user_in_chat, connection_status)
-from tg_bot.modules.helper_funcs.extraction import extract_user_and_text
-from tg_bot.modules.helper_funcs.string_handling import extract_time
-from tg_bot.modules.log_channel import loggable, gloggable
+from Manager import dispatcher, LOGGER, DEV_USERS, SUDO_USERS, TIGER_USERS
+from Manager.modules.disable import DisableAbleCommandHandler
+from Manager.modules.helper_funcs.chat_status import (bot_admin, user_admin, is_user_ban_protected, can_restrict,
+                                                     is_user_admin, is_user_in_chat, connection_status, can_delete, user_can_ban)
+from Manager.modules.helper_funcs.extraction import extract_user_and_text
+from Manager.modules.helper_funcs.string_handling import extract_time
+from Manager.modules.log_channel import loggable, gloggable
 
 
 @run_async
@@ -20,6 +20,7 @@ from tg_bot.modules.log_channel import loggable, gloggable
 @bot_admin
 @can_restrict
 @user_admin
+@user_can_ban
 @loggable
 def ban(bot: Bot, update: Update, args: List[str]) -> str:
     chat = update.effective_chat
@@ -84,6 +85,7 @@ def ban(bot: Bot, update: Update, args: List[str]) -> str:
 @bot_admin
 @can_restrict
 @user_admin
+@user_can_ban
 @loggable
 def temp_ban(bot: Bot, update: Update, args: List[str]) -> str:
     chat = update.effective_chat
@@ -166,6 +168,7 @@ def temp_ban(bot: Bot, update: Update, args: List[str]) -> str:
 @bot_admin
 @can_restrict
 @user_admin
+@user_can_ban
 @loggable
 def punch(bot: Bot, update: Update, args: List[str]) -> str:
     chat = update.effective_chat
@@ -227,7 +230,7 @@ def punchme(bot: Bot, update: Update):
 
     res = update.effective_chat.unban_member(user_id)  # unban on current user = kick
     if res:
-        update.effective_message.reply_text("No problem.")
+        update.effective_message.reply_text("*punches you out of the group*")
     else:
         update.effective_message.reply_text("Huh? I can't :/")
 
@@ -237,6 +240,7 @@ def punchme(bot: Bot, update: Update):
 @bot_admin
 @can_restrict
 @user_admin
+@user_can_ban
 @loggable
 def unban(bot: Bot, update: Update, args: List[str]) -> str:
     message = update.effective_message
@@ -324,13 +328,13 @@ def selfunban(bot: Bot, update: Update, args: List[str]) -> str:
 
 
 __help__ = """
- - /punchme: punchs the user who issued the command
+ • `/punchme`*:* punchs the user who issued the command
 
-*Admin only:*
- - /ban <userhandle>: bans a user. (via handle, or reply)
- - /tban <userhandle> x(m/h/d): bans a user for x time. (via handle, or reply). m = minutes, h = hours, d = days.
- - /unban <userhandle>: unbans a user. (via handle, or reply)
- - /punch <userhandle>: Punches a user out of the group, (via handle, or reply)
+*Admins only:*
+ • `/ban <userhandle>`*:* bans a user. (via handle, or reply)
+ • `/tban <userhandle> x(m/h/d)`*:* bans a user for `x` time. (via handle, or reply). `m` = `minutes`, `h` = `hours`, `d` = `days`.
+ • `/unban <userhandle>`*:* unbans a user. (via handle, or reply)
+ • `/punch <userhandle>`*:* Punches a user out of the group, (via handle, or reply)
 """
 
 BAN_HANDLER = CommandHandler("ban", ban, pass_args=True)
@@ -347,5 +351,5 @@ dispatcher.add_handler(UNBAN_HANDLER)
 dispatcher.add_handler(ROAR_HANDLER)
 dispatcher.add_handler(PUNCHME_HANDLER)
 
-__mod_name__ = "BAN"
+__mod_name__ = "Bans"
 __handlers__ = [BAN_HANDLER, TEMPBAN_HANDLER, PUNCH_HANDLER, UNBAN_HANDLER, ROAR_HANDLER, PUNCHME_HANDLER]

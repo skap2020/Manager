@@ -6,11 +6,11 @@ from telegram.error import BadRequest
 from telegram.ext import CommandHandler, run_async
 from telegram.utils.helpers import mention_html
 
-import tg_bot.modules.sql.blacklistusers_sql as sql
-from tg_bot import dispatcher, OWNER_ID, DEV_USERS, SUDO_USERS, WHITELIST_USERS, SUPPORT_USERS
-from tg_bot.modules.helper_funcs.chat_status import dev_plus
-from tg_bot.modules.helper_funcs.extraction import extract_user_and_text, extract_user
-from tg_bot.modules.log_channel import gloggable
+import Manager.modules.sql.blacklistusers_sql as sql
+from Manager import dispatcher, OWNER_ID, DEV_USERS, SUDO_USERS, WHITELIST_USERS, SUPPORT_USERS
+from Manager.modules.helper_funcs.chat_status import dev_plus
+from Manager.modules.helper_funcs.extraction import extract_user_and_text, extract_user
+from Manager.modules.log_channel import gloggable
 
 BLACKLISTWHITELIST = [OWNER_ID] + DEV_USERS + SUDO_USERS + WHITELIST_USERS + SUPPORT_USERS
 BLABLEUSERS = [OWNER_ID] + DEV_USERS
@@ -125,7 +125,7 @@ def bl_users(bot: Bot, update: Update):
 def __user_info__(user_id):
     is_blacklisted = sql.is_user_blacklisted(user_id)
 
-    text = "Globally Ignored: <b>{}</b>"
+    text = "Blacklisted: <b>{}</b>"
 
     if is_blacklisted:
         text = text.format("Yes")
@@ -146,5 +146,5 @@ dispatcher.add_handler(BL_HANDLER)
 dispatcher.add_handler(UNBL_HANDLER)
 dispatcher.add_handler(BLUSERS_HANDLER)
 
-__mod_name__ = "BLACKLISTING USERS"
+__mod_name__ = "Blacklisting Users"
 __handlers__ = [BL_HANDLER, UNBL_HANDLER, BLUSERS_HANDLER]

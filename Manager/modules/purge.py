@@ -6,10 +6,10 @@ from telegram.error import BadRequest
 from telegram.ext import Filters, run_async
 from telegram.utils.helpers import mention_html
 
-from tg_bot import dispatcher, LOGGER
-from tg_bot.modules.disable import DisableAbleCommandHandler
-from tg_bot.modules.helper_funcs.chat_status import user_admin, can_delete
-from tg_bot.modules.log_channel import loggable
+from Manager import dispatcher, LOGGER
+from Manager.modules.disable import DisableAbleCommandHandler
+from Manager.modules.helper_funcs.chat_status import user_admin, can_delete
+from Manager.modules.log_channel import loggable
 
 
 @run_async
@@ -98,11 +98,11 @@ def del_message(bot: Bot, update: Update) -> str:
 
 
 __help__ = """
-*Admin only:*
- - /del: deletes the message you replied to
- - /purge: deletes all messages between this and the replied to message.
- - /purge <integer X>: deletes the replied message, and X messages following it if replied to a message.
- - /purge <integer X>: deletes the number of messages starting from bottom. (Counts manaully deleted messages too)
+*Admins only:*
+ • `/del`*:* deletes the message you replied to
+ • `/purge`*:* deletes all messages between this and the replied to message.
+ • `/purge <integer X>`*:* deletes the replied message, and X messages following it if replied to a message.
+ • `/purge <integer X>`*:* deletes the number of messages starting from bottom. (Counts manaully deleted messages too)
 """
 
 DELETE_HANDLER = DisableAbleCommandHandler("del", del_message, filters=Filters.group)
@@ -111,6 +111,6 @@ PURGE_HANDLER = DisableAbleCommandHandler("purge", purge, filters=Filters.group,
 dispatcher.add_handler(DELETE_HANDLER)
 dispatcher.add_handler(PURGE_HANDLER)
 
-__mod_name__ = "PURGE & DEL"
+__mod_name__ = "Purges"
 __command_list__ = ["del", "purge"]
 __handlers__ = [DELETE_HANDLER, PURGE_HANDLER]

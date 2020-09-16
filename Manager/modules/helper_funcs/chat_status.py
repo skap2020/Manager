@@ -2,7 +2,7 @@ from functools import wraps
 
 from telegram import Bot, Chat, ChatMember, Update, ParseMode
 
-from tg_bot import dispatcher, DEL_CMDS, WHITELIST_USERS, TIGER_USERS, SUPPORT_USERS, SUDO_USERS, DEV_USERS
+from Manager import dispatcher, DEL_CMDS, WHITELIST_USERS, TIGER_USERS, SUPPORT_USERS, SUDO_USERS, DEV_USERS, SUPPORT_CHAT
 
 
 def is_whitelist_plus(chat: Chat, user_id: int, member: ChatMember = None) -> bool:
@@ -107,7 +107,7 @@ def support_plus(func):
         user = update.effective_user
         chat = update.effective_chat
 
-        if user and is_whitelist_plus(chat, user.id):
+        if user and is_support_plus(chat, user.id):
             return func(bot, update, *args, **kwargs)
         elif DEL_CMDS and " " not in update.effective_message.text:
             update.effective_message.delete()
@@ -124,7 +124,7 @@ def whitelist_plus(func):
         if user and is_whitelist_plus(chat, user.id):
             return func(bot, update, *args, **kwargs)
         else:
-            update.effective_message.reply_text("You don't have access to use this.\nVisit @AnonymousD3061")
+            update.effective_message.reply_text(f"You don't have access to use this.\nVisit {SUPPORT_CHAT}")
 
     return is_whitelist_plus_func
 
@@ -298,6 +298,17 @@ def connection_status(func):
 
 
 # Workaround for circular import with connection.py
-from tg_bot.modules import connection
+from Manager.modules import connection
 
 connected = connection.connected
+def user_can_ban(func):
+    @wraps(func)
+    def user_is_banhammer(bot: Bot, update: Update, *args, **kwargs):
+        user = update.effective_user.id
+        member = update.effective_chat.get_member(user)
+        if not (member.can_restrict_members or member.status == "creator") and not user in SUDO_USERS:
+            update.effective_message.reply_text("Sorry son, but you're not worthy to wield the banhammer.")
+            return ""
+        return func(bot, update, *args, **kwargs)
+    
+    return user_is_banhammer

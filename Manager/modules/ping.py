@@ -5,8 +5,8 @@ import requests
 from telegram import Bot, Update, ParseMode
 from telegram.ext import run_async
 
-from tg_bot import dispatcher, StartTime
-from tg_bot.modules.disable import DisableAbleCommandHandler
+from Manager import dispatcher, StartTime
+from Manager.modules.disable import DisableAbleCommandHandler
 
 sites_list = {
     "Telegram": "https://api.telegram.org",
@@ -57,7 +57,7 @@ def ping_func(to_ping: List[str]) -> List[str]:
 
         pinged_site = f"<b>{each_ping}</b>"
 
-        if each_ping is "calculating..." or each_ping is "calculating..":
+        if each_ping is "Kaizoku" or each_ping is "Kayo":
             pinged_site = f'<a href="{sites_list[each_ping]}">{each_ping}</a>'
             ping_time = f"<code>{ping_time} (Status: {r.status_code})</code>"
 
@@ -94,8 +94,8 @@ def pingall(bot: Bot, update: Update):
 
 
 __help__ = """
- - /ping - get ping time of bot to telegram server
- - /pingall - get all listed ping time
+ • `/ping`*:* get ping time of bot to telegram server
+ • `/pingall`*:* get all listed ping time
 """
 
 PING_HANDLER = DisableAbleCommandHandler("ping", ping)
@@ -104,6 +104,6 @@ PINGALL_HANDLER = DisableAbleCommandHandler("pingall", pingall)
 dispatcher.add_handler(PING_HANDLER)
 dispatcher.add_handler(PINGALL_HANDLER)
 
-__mod_name__ = "PING"
+__mod_name__ = "Ping"
 __command_list__ = ["ping", "pingall"]
 __handlers__ = [PING_HANDLER, PINGALL_HANDLER]

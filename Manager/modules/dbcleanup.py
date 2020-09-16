@@ -4,10 +4,10 @@ from telegram import Bot, Update, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.error import BadRequest, Unauthorized
 from telegram.ext import CommandHandler, CallbackQueryHandler, run_async
 
-import tg_bot.modules.sql.global_bans_sql as gban_sql
-import tg_bot.modules.sql.users_sql as user_sql
-from tg_bot import dispatcher, OWNER_ID, DEV_USERS
-from tg_bot.modules.helper_funcs.chat_status import dev_plus
+import Manager.modules.sql.global_bans_sql as gban_sql
+import Manager.modules.sql.users_sql as user_sql
+from Manager import dispatcher, OWNER_ID, DEV_USERS
+from Manager.modules.helper_funcs.chat_status import dev_plus
 
 
 def get_invalid_chats(bot: Bot, update: Update, remove: bool = False):
@@ -202,5 +202,5 @@ dispatcher.add_handler(DB_CLEANUP_HANDLER)
 dispatcher.add_handler(LEAVE_MUTED_CHATS_HANDLER)
 dispatcher.add_handler(BUTTON_HANDLER)
 
-__mod_name__ = "DB CLEANUP"
+__mod_name__ = "DB Cleanup"
 __handlers__ = [DB_CLEANUP_HANDLER, LEAVE_MUTED_CHATS_HANDLER, BUTTON_HANDLER]

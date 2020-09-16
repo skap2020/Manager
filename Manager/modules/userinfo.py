@@ -5,10 +5,10 @@ from telegram import Bot, Update, ParseMode, MAX_MESSAGE_LENGTH
 from telegram.ext.dispatcher import run_async
 from telegram.utils.helpers import escape_markdown
 
-import tg_bot.modules.sql.userinfo_sql as sql
-from tg_bot import dispatcher, SUDO_USERS, DEV_USERS
-from tg_bot.modules.disable import DisableAbleCommandHandler
-from tg_bot.modules.helper_funcs.extraction import extract_user
+import Manager.modules.sql.userinfo_sql as sql
+from Manager import dispatcher, SUDO_USERS, DEV_USERS
+from Manager.modules.disable import DisableAbleCommandHandler
+from Manager.modules.helper_funcs.extraction import extract_user
 
 
 @run_async
@@ -116,20 +116,20 @@ def __user_info__(user_id):
     bio = html.escape(sql.get_user_bio(user_id) or "")
     me = html.escape(sql.get_user_me_info(user_id) or "")
     if bio and me:
-        return f"\n<b>About user:</b>\n{me}\n<b>What others say:</b>\n{bio}\n"
+        return f"<b>About user:</b>\n{me}\n<b>What others say:</b>\n{bio}"
     elif bio:
-        return f"\n<b>What others say:</b>\n{bio}\n"
+        return f"<b>What others say:</b>\n{bio}\n"
     elif me:
-        return f"\n<b>About user:</b>\n{me}\n"
+        return f"<b>About user:</b>\n{me}"
     else:
-        return "\n"
+        return ""
 
 
 __help__ = """
- - /setbio <text>: while replying, will save another user's bio
- - /bio: will get your or another user's bio. This cannot be set by yourself.
- - /setme <text>: will set your info
- - /me: will get your or another user's info
+ • `/setbio <text>`*:* while replying, will save another user's bio
+ • `/bio`*:* will get your or another user's bio. This cannot be set by yourself.
+ • `/setme <text>`*:* will set your info
+ • `/me`*:* will get your or another user's info
 """
 
 SET_BIO_HANDLER = DisableAbleCommandHandler("setbio", set_about_bio)
@@ -143,6 +143,6 @@ dispatcher.add_handler(GET_BIO_HANDLER)
 dispatcher.add_handler(SET_ABOUT_HANDLER)
 dispatcher.add_handler(GET_ABOUT_HANDLER)
 
-__mod_name__ = "BIOS & ABOUTS"
+__mod_name__ = "Bios and Abouts"
 __command_list__ = ["setbio", "bio", "setme", "me"]
 __handlers__ = [SET_BIO_HANDLER, GET_BIO_HANDLER, SET_ABOUT_HANDLER, GET_ABOUT_HANDLER]

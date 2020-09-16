@@ -7,17 +7,17 @@ from telegram.error import BadRequest
 from telegram.ext import CommandHandler, run_async
 from telegram.utils.helpers import mention_html
 
-from tg_bot import dispatcher, LOGGER, TIGER_USERS
-from tg_bot.modules.helper_funcs.chat_status import (bot_admin, user_admin, is_user_admin, can_restrict,
+from Manager import dispatcher, LOGGER, TIGER_USERS
+from Manager.modules.helper_funcs.chat_status import (bot_admin, user_admin, is_user_admin, can_restrict,
                                                      connection_status)
-from tg_bot.modules.helper_funcs.extraction import extract_user, extract_user_and_text
-from tg_bot.modules.helper_funcs.string_handling import extract_time
-from tg_bot.modules.log_channel import loggable
+from Manager.modules.helper_funcs.extraction import extract_user, extract_user_and_text
+from Manager.modules.helper_funcs.string_handling import extract_time
+from Manager.modules.log_channel import loggable
 
 
 def check_user(user_id: int, bot: Bot, chat: Chat) -> Optional[str]:
     if not user_id:
-        reply = "You don't seem to be referring to a user."
+        reply = "You don't seem to be referring to a user or the ID specified is incorrect.."
         return reply
 
     try:
@@ -190,10 +190,10 @@ def temp_mute(bot: Bot, update: Update, args: List[str]) -> str:
 
 
 __help__ = """
-*Admin only:*
- - /mute <userhandle>: silences a user. Can also be used as a reply, muting the replied to user.
- - /tmute <userhandle> x(m/h/d): mutes a user for x time. (via handle, or reply). m = minutes, h = hours, d = days.
- - /unmute <userhandle>: unmutes a user. Can also be used as a reply, muting the replied to user.
+*Admins only:*
+ • `/mute <userhandle>`*:* silences a user. Can also be used as a reply, muting the replied to user.
+ • `/tmute <userhandle> x(m/h/d)`*:* mutes a user for x time. (via handle, or reply). `m` = `minutes`, `h` = `hours`, `d` = `days`.
+ • `/unmute <userhandle>`*:* unmutes a user. Can also be used as a reply, muting the replied to user.
 """
 
 MUTE_HANDLER = CommandHandler("mute", mute, pass_args=True)
@@ -204,5 +204,5 @@ dispatcher.add_handler(MUTE_HANDLER)
 dispatcher.add_handler(UNMUTE_HANDLER)
 dispatcher.add_handler(TEMPMUTE_HANDLER)
 
-__mod_name__ = "MUTES"
+__mod_name__ = "Muting"
 __handlers__ = [MUTE_HANDLER, UNMUTE_HANDLER, TEMPMUTE_HANDLER]

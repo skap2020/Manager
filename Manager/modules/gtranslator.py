@@ -3,8 +3,8 @@ from googletrans import Translator, LANGUAGES
 from telegram import Bot, Update, ParseMode
 from telegram.ext import run_async
 
-from tg_bot import dispatcher
-from tg_bot.modules.disable import DisableAbleCommandHandler
+from Manager import dispatcher
+from Manager.modules.disable import DisableAbleCommandHandler
 
 
 @run_async
@@ -119,13 +119,15 @@ def totranslate(bot: Bot, update: Update):
 
 
 __help__ = """
-- /tr (language code) as reply to a long message.
+• `/tr` or `/tl` (language code) as reply to a long message.
+*Example:* `/tr en`*:* translates something to english. 
+         `/tr hi-en`*:* translates hindi to english.
 """
 
-TRANSLATE_HANDLER = DisableAbleCommandHandler("tr", totranslate)
+TRANSLATE_HANDLER = DisableAbleCommandHandler(["tr", "tl"], totranslate)
 
 dispatcher.add_handler(TRANSLATE_HANDLER)
 
-__mod_name__ = "TRANSLATOR"
-__command_list__ = ["tr"]
+__mod_name__ = "Translator"
+__command_list__ = ["tr", "tl"]
 __handlers__ = [TRANSLATE_HANDLER]
