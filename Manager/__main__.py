@@ -22,7 +22,7 @@ from Manager.modules.helper_funcs.misc import paginate_modules
 PM_START_TEXT = """
 Hello {}, my name is {}!
 
-Hey , I am a Group Manager specially made for Mnaging groups.
+Hey , I am a Group Manager specially made for Managing groups.
 
 This Pro bot was made by  [ᒍOKEᖇ](t.me/joker_ka_baap)
 
